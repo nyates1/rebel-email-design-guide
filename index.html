@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YDM Email Design Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0c0c0c;
+      --surface: #111111;
+      --surface-2: #1a1a1a;
+      --border: #232323;
+      --border-subtle: #181818;
+      --text: #f0f0ee;
+      --text-2: #909090;
+      --text-3: #4a4a4a;
+      --gold: #c9a870;
+      --gold-dim: rgba(201, 168, 112, 0.12);
+      --do-bg: rgba(30, 65, 45, 0.35);
+      --do-border: rgba(70, 140, 90, 0.35);
+      --do-tag: #5dbf8a;
+      --dont-bg: rgba(80, 25, 25, 0.35);
+      --dont-border: rgba(160, 55, 55, 0.35);
+      --dont-tag: #e07070;
+      --sidebar-w: 264px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 32px 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .sidebar-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .sidebar-nav { padding: 12px 0 32px; flex: 1; }
+
+    .nav-group-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      padding: 20px 24px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 24px;
+      font-size: 12.5px;
+      color: var(--text-2);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .nav-item:hover { color: var(--text); background: var(--surface-2); }
+
+    .nav-item.active {
+      color: var(--text);
+      border-left-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .nav-item.active .nav-num { color: var(--gold); }
+
+    .nav-num {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-3);
+      min-width: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 64px 72px;
+      border-bottom: 1px solid var(--border);
+      max-width: 960px;
+    }
+
+    .hero-eyebrow {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .hero-sub {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-2);
+      margin-bottom: 36px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hero-meta-item { font-size: 11.5px; color: var(--text-3); }
+    .hero-meta-item strong { color: var(--text-2); font-weight: 500; margin-left: 5px; }
+
+    .hero-philosophy p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-2);
+      max-width: 620px;
+    }
+
+    .hero-philosophy p + p { margin-top: 14px; }
+
+    .reference-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .ref-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .ref-badge {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      border-bottom: 1px solid var(--border);
+      padding: 72px 64px;
+      max-width: 960px;
+    }
+
+    .section-header {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 36px;
+    }
+
+    .section-num {
+      font-size: 68px;
+      font-weight: 200;
+      line-height: 0.85;
+      color: var(--border);
+      letter-spacing: -4px;
+      min-width: 60px;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+
+    .section-titles { padding-top: 2px; }
+
+    .section-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 7px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: var(--text-2);
+      max-width: 600px;
+      margin-bottom: 36px;
+    }
+
+    /* ── DO/DONT ── */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    .rule-card {
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+
+    .rule-card.do {
+      background: var(--do-bg);
+      border: 1px solid var(--do-border);
+    }
+
+    .rule-card.dont {
+      background: var(--dont-bg);
+      border: 1px solid var(--dont-border);
+    }
+
+    .rule-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .do .rule-tag { color: var(--do-tag); }
+    .dont .rule-tag { color: var(--dont-tag); }
+
+    .rule-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .rule-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rule-card ul li {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .rule-card ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--text-3);
+    }
+
+    /* ── EXAMPLES ── */
+    .examples-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .examples-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .examples-hint {
+      font-size: 10.5px;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    .examples-scroll {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .examples-scroll::-webkit-scrollbar { height: 3px; }
+    .examples-scroll::-webkit-scrollbar-track { background: transparent; }
+    .examples-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .example-card {
+      flex-shrink: 0;
+      width: 148px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .example-card:hover { transform: translateY(-4px); }
+    .example-card:hover .example-zoom { opacity: 1; }
+
+    .example-img-wrap {
+      width: 148px;
+      height: 252px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .example-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .example-zoom {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: 10px;
+    }
+
+    .zoom-icon {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .zoom-icon svg {
+      width: 16px; height: 16px;
+      color: white;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .example-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .ph-icon {
+      font-size: 22px;
+      opacity: 0.2;
+    }
+
+    .ph-filename {
+      font-size: 9px;
+      color: var(--text-3);
+      text-align: center;
+      word-break: break-all;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      line-height: 1.5;
+    }
+
+    .example-brand {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-bottom: 2px;
+    }
+
+    .example-title {
+      font-size: 11px;
+      color: var(--text-2);
+      line-height: 1.4;
+      margin-bottom: 3px;
+    }
+
+    .example-note {
+      font-size: 10px;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .callout {
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 112, 0.2);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 36px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    .callout strong { color: var(--gold); font-weight: 600; }
+
+    /* ── PATTERN BLOCK ── */
+    .pattern-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12.5px;
+      line-height: 2;
+      color: var(--text-2);
+    }
+
+    .pattern-block .ph { color: var(--text-3); font-style: italic; }
+    .pattern-block .hl { color: var(--gold); }
+
+    /* ── CALIBRATION ── */
+    .cal-header-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 1fr;
+      padding: 0 20px 8px;
+    }
+
+    .cal-header-cell {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .cal-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 1fr;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .cal-cell {
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .cal-cell:not(:last-child) { border-right: 1px solid var(--border); }
+
+    .cal-cell.signal { font-weight: 600; color: var(--text); background: var(--surface-2); }
+    .cal-cell.do { background: var(--do-bg); }
+    .cal-cell.dont { background: var(--dont-bg); color: var(--text-2); }
+
+    /* ── CHECKLIST ── */
+    .checklist { display: flex; flex-direction: column; gap: 8px; }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .check-box {
+      width: 18px; height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--text-3);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .static-box {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-3);
+      border-color: var(--border-subtle);
+    }
+
+    .check-text { font-size: 14px; line-height: 1.5; color: var(--text); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lb-img-viewport {
+      width: min(420px, 88vw);
+      height: 78vh;
+      overflow: hidden;
+      border-radius: 10px;
+      position: relative;
+      background: #0a0a0a;
+      cursor: zoom-in;
+      flex-shrink: 0;
+    }
+
+    .lb-img-viewport.zoomed { cursor: grab; }
+    .lb-img-viewport.dragging { cursor: grabbing; }
+
+    .lb-img-viewport img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transform-origin: center center;
+      transform: translate(0px, 0px) scale(1);
+      transition: transform 0.08s ease-out;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .lb-img-viewport img.no-transition {
+      transition: none;
+    }
+
+    .lb-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lb-caption {
+      font-size: 13px;
+      color: var(--text-2);
+      text-align: center;
+    }
+
+    .lb-caption strong { color: var(--text); }
+
+    .lb-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 8px;
+    }
+
+    .lb-zoom-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: none;
+      border: none;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .lb-zoom-btn:hover { color: var(--text); background: var(--border); }
+    .lb-zoom-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .lb-zoom-level {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+      min-width: 38px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .lb-divider {
+      width: 1px; height: 16px;
+      background: var(--border);
+      margin: 0 2px;
+    }
+
+    .lb-reset-btn {
+      font-size: 11px;
+      color: var(--text-3);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 4px;
+      font-family: inherit;
+      transition: color 0.15s;
+    }
+
+    .lb-reset-btn:hover { color: var(--text-2); }
+
+    .lb-hint {
+      font-size: 10.5px;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    .lb-close {
+      position: fixed;
+      top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .lb-close:hover { background: var(--surface); border-color: var(--text-3); }
+
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.2s;
+    }
+
+    .lb-nav:hover { background: var(--surface); border-color: var(--text-3); }
+    .lb-prev { left: 16px; }
+    .lb-next { right: 16px; }
+    .lb-nav:disabled { opacity: 0.25; cursor: default; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      padding: 48px 64px;
+      border-top: 1px solid var(--border);
+      max-width: 960px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .footer-brand strong { color: var(--gold); }
+
+    .footer-note {
+      font-size: 11.5px;
+      color: var(--text-3);
+      font-style: italic;
+      max-width: 380px;
+    }
+
+    /* ── IMAGES NOTICE ── */
+    .images-notice {
+      background: rgba(201, 168, 112, 0.07);
+      border: 1px solid rgba(201, 168, 112, 0.2);
+      border-radius: 10px;
+      padding: 16px 22px;
+      font-size: 12.5px;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin: 32px 64px 0;
+      max-width: 800px;
+    }
+
+    .images-notice strong { color: var(--gold); }
+    .images-notice code {
+      font-family: 'SF Mono', monospace;
+      background: var(--surface-2);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .hero, .section, .page-footer { padding: 48px 24px; }
+      .images-notice { margin: 24px 24px 0; }
+      .hero h1 { font-size: 38px; }
+      .do-dont { grid-template-columns: 1fr; }
+      .cal-header-row { display: none; }
+      .cal-row { grid-template-columns: 1fr; }
+      .cal-cell:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-eyebrow">YDM Agency</div>
+    <div class="sidebar-title">Email Design Guide</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group-label">Foundation</div>
+    <a class="nav-item active" href="#philosophy" data-section="philosophy">
+      <span class="nav-num">—</span> Design Philosophy
+    </a>
+
+    <div class="nav-group-label">Core Principles</div>
+    <a class="nav-item" href="#p1" data-section="p1">
+      <span class="nav-num">01</span> One Canvas
+    </a>
+    <a class="nav-item" href="#p2" data-section="p2">
+      <span class="nav-num">02</span> Floating Logo
+    </a>
+    <a class="nav-item" href="#p3" data-section="p3">
+      <span class="nav-num">03</span> Photography That Melts
+    </a>
+    <a class="nav-item" href="#p4" data-section="p4">
+      <span class="nav-num">04</span> Header / Subheader
+    </a>
+    <a class="nav-item" href="#p5" data-section="p5">
+      <span class="nav-num">05</span> Pill CTAs
+    </a>
+    <a class="nav-item" href="#p6" data-section="p6">
+      <span class="nav-num">06</span> One Palette
+    </a>
+    <a class="nav-item" href="#p7" data-section="p7">
+      <span class="nav-num">07</span> Space Is Design
+    </a>
+    <a class="nav-item" href="#p8" data-section="p8">
+      <span class="nav-num">08</span> Typography Hierarchy
+    </a>
+    <a class="nav-item" href="#p9" data-section="p9">
+      <span class="nav-num">09</span> Technical Callouts
+    </a>
+    <a class="nav-item" href="#p10" data-section="p10">
+      <span class="nav-num">10</span> Clean Footer
+    </a>
+
+    <a class="nav-item" href="#p11" data-section="p11">
+      <span class="nav-num">11</span> Infographics
+    </a>
+
+    <div class="nav-group-label">Application</div>
+    <a class="nav-item" href="#calibration" data-section="calibration">
+      <span class="nav-num">—</span> Client Calibration
+    </a>
+    <a class="nav-item" href="#checklist" data-section="checklist">
+      <span class="nav-num">—</span> Pre-Send Checklist
+    </a>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- Images notice -->
+  <div class="images-notice" id="images-notice">
+    <strong>Adding email examples:</strong> Save the 12 email screenshots to <code>03-Resources/email-design-guide/images/</code> using these filenames:
+    <code>vessel-bestseller.png</code> · <code>vessel-polo.png</code> · <code>vessel-sundaycarry.png</code> · <code>vessel-finalhours.png</code> · <code>vessel-findyoursunday.png</code> · <code>brez-lighter.png</code> · <code>brez-raddads.png</code> · <code>brez-strawberry.png</code> · <code>one-sol-creatine.png</code> · <code>one-sol-summer.png</code> · <code>one-sol-hydration.png</code> · <code>apple-airpods.png</code>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="philosophy">
+    <div class="hero-eyebrow">YDM Agency · Email Design Standards</div>
+    <h1>How We Build<br>Emails That Feel<br>Modern</h1>
+    <div class="hero-sub">A design guide for the YDM design team.</div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">Scope <strong>Agency-wide</strong></div>
+      <div class="hero-meta-item">Applies To <strong>All Email Clients</strong></div>
+      <div class="hero-meta-item">Status <strong>Active</strong></div>
+    </div>
+
+    <div class="hero-philosophy">
+      <p>Modern ecom emails feel like a scroll, not a stack. The reader should move through the email the way they'd scroll a well-designed website — one continuous surface with natural rhythm, breathing room, and zero visual friction.</p>
+      <p>If an email looks like a series of rectangles placed on top of each other, it's not modern — regardless of how good the photography is. Structure is the thing that most designers get wrong, and it's the first thing a reader feels even if they can't name it.</p>
+      <p>This guide applies across all clients. When client aesthetics conflict with these principles, the client wins — but the structural rules always hold. For client-specific calibration, see each <code style="font-family:monospace;font-size:12px;background:var(--surface-2);padding:1px 6px;border-radius:4px">CLIENT.md</code>.</p>
+    </div>
+
+    <div class="reference-strip">
+      <span class="ref-label">Reference brands</span>
+      <span class="ref-badge">Vessel</span>
+      <span class="ref-badge">BREZ</span>
+      <span class="ref-badge">Apple</span>
+      <span class="ref-badge">One Sol</span>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 1 ── -->
+  <section class="section" id="p1">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 01</div>
+        <div class="section-title">One Canvas, No Sections</div>
+      </div>
+    </div>
+
+    <p class="section-desc">The email reads as a single scrollable surface. There are no visible section breaks, no dividing lines, and no background color changes that create a hard edge between content areas. Think of it as one long canvas the reader scrolls down — not a series of content boxes stacked vertically.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Run a single background color, gradient, or image treatment the full length of the email</li>
+          <li>Use gradient fades to transition between sections — colors bleed into each other</li>
+          <li>Let photography extend beyond its content boundary so it flows into the next section</li>
+          <li>Match background colors between sections so the seam is invisible</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Alternate white and grey section blocks — the #1 signal of a template email</li>
+          <li>Add horizontal rules or dividers between sections</li>
+          <li>End a section with a hard rectangular crop or color stop</li>
+          <li>Use section-level background colors that contrast sharply with neighbors</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Click to view full email</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-sundaycarry.png','Vessel','Sunday Carry Olive','Consistent dark background — no section breaks visible')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-sundaycarry.png" alt="Vessel Sunday Carry Olive" onerror="showPlaceholder(this,'vessel-sundaycarry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Sunday Carry Olive</div>
+        <div class="example-note">Unified dark canvas, no breaks</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Purple gradient flows unbroken from hero to footer')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Purple gradient runs full length</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-creatine.png','One Sol','Charge Your Mind','Orange gradient is the entire background — one color story')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-creatine.png" alt="One Sol Creatine" onerror="showPlaceholder(this,'one-sol-creatine.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Charge Your Mind</div>
+        <div class="example-note">Unbroken orange gradient throughout</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-finalhours.png','Vessel','Final Hours to Order','Dark background maintained across every content block')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-finalhours.png" alt="Vessel Final Hours" onerror="showPlaceholder(this,'vessel-finalhours.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Final Hours to Order</div>
+        <div class="example-note">Dark canvas held the full length</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 2 ── -->
+  <section class="section" id="p2">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 02</div>
+        <div class="section-title">Floating Logo — No Header Block</div>
+      </div>
+    </div>
+
+    <p class="section-desc">The brand mark sits directly on top of the hero image or background. No background container, no padding block, no colored strip holding the logo. It simply exists at the top of the email as if placed there. This is one of the clearest signals separating a modern email from a template.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Place the logo centered, floating over the hero image or email background</li>
+          <li>Use a logo version (white or dark) that works directly on the email's background</li>
+          <li>Leave the logo as the only element in its vertical space — no nav links beside it</li>
+          <li>Keep the logo small and restrained — it identifies, not decorates</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Create a separate "header" row with its own background color behind the logo</li>
+          <li>Put navigation links or social icons beside the logo in the header</li>
+          <li>Add a drop shadow to the logo to make it visible — pick a logo that works on the background</li>
+          <li>Use a different background for the header than the rest of the email</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">All four reference brands do this correctly</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-bestseller.png','Vessel','One Best Seller','Logo floats over dramatic dark product image — no header block')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-bestseller.png" alt="Vessel Best Seller" onerror="showPlaceholder(this,'vessel-bestseller.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">One Best Seller</div>
+        <div class="example-note">Logo over dark image, no header bar</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','BREZ wordmark sits directly on lilac photo background')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Wordmark floats over hero photo</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-creatine.png','One Sol','Charge Your Mind','Small logo at top, no background container')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-creatine.png" alt="One Sol Creatine" onerror="showPlaceholder(this,'one-sol-creatine.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Charge Your Mind</div>
+        <div class="example-note">Logo floats on gradient — no box</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/apple-airpods.png','Apple','AirPods Max 2','Apple logo centered on white — letterforms only, no container')">
+        <div class="example-img-wrap">
+          <img src="images/apple-airpods.png" alt="Apple AirPods" onerror="showPlaceholder(this,'apple-airpods.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Apple</div>
+        <div class="example-title">AirPods Max 2</div>
+        <div class="example-note">Icon only, floats on white canvas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 3 ── -->
+  <section class="section" id="p3">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 03</div>
+        <div class="section-title">Photography That Melts, Not Crops</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Images don't end at a rectangle. Hero shots, lifestyle photography, and product images fade out at their edges — typically at the bottom — dissolving into whatever section comes next. The image's boundary becomes invisible. This is the single most noticeable technique in modern email design and is hard to unsee once you know it.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Apply a bottom-to-transparent gradient fade on hero and lifestyle images</li>
+          <li>Match the fade's end color exactly to the background of the next section</li>
+          <li>Let product photography extend beyond its "section" into the one below</li>
+          <li>Treat the fade as part of the design — it's not a fix, it's the technique</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Drop images into hard-edged boxes — visible corners kill the effect immediately</li>
+          <li>Place a product shot on a contrasting background that reveals the image boundary</li>
+          <li>Use a rectangle mask where a fade belongs</li>
+          <li>Let the photo's native background color clash with the email's background</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Look at where each photo ends — no hard edges</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Hero photo fades bottom-to-purple — seamless transition to next section')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Photo fades into purple — seamless</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-strawberry.png','BREZ','Strawberry Spritz','Cocktail photo dissolves into recipe card below it')">
+        <div class="example-img-wrap">
+          <img src="images/brez-strawberry.png" alt="BREZ Strawberry" onerror="showPlaceholder(this,'brez-strawberry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Strawberry Spritz</div>
+        <div class="example-note">Cocktail photo melts into card section</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-hydration.png','One Sol','Stay Hydrated, Stay Cute','Model photo fades at the bottom into the sage green background')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-hydration.png" alt="One Sol Hydration" onerror="showPlaceholder(this,'one-sol-hydration.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Stay Hydrated, Stay Cute</div>
+        <div class="example-note">Model fades into sage green</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-sundaycarry.png','Vessel','Sunday Carry Olive','Product photography bleeds into dark background — no box edges visible')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-sundaycarry.png" alt="Vessel Sunday Carry" onerror="showPlaceholder(this,'vessel-sundaycarry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Sunday Carry Olive</div>
+        <div class="example-note">Product bleeds into dark bg — no box</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 4 ── -->
+  <section class="section" id="p4">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 04</div>
+        <div class="section-title">Content Structure: Header / Subheader / Repeat</div>
+      </div>
+    </div>
+
+    <p class="section-desc">This is the most important structural rule. Modern emails do not use product blocks, feature grids, or icon + description layouts as the primary content structure. They use visual hierarchy and vertical repetition. Each point gets a headline. The headline carries the weight. The subheader supports it. Then it repeats.</p>
+
+    <div class="callout">
+      <strong>The problem with product blocks:</strong> When copy arrives with a list of features, the instinct is to build a 3-column icon grid or a table-style layout. Those layouts create visible "blocks" that look rigid and non-modern — even if every other design decision is right. The structure fights the aesthetic.
+    </div>
+
+    <div class="callout" style="border-color: rgba(100,140,200,0.25); background: rgba(60,80,140,0.15);">
+      <strong>Exception — infographics:</strong> Timelines, comparison charts, and structured data visuals are not product blocks. When the content is genuinely visual (a journey, a side-by-side comparison, a breakdown), use an infographic format — but match it to the right style. See <a href="#p11" style="color:var(--gold)">Principle 11</a> for the three approved formats.
+    </div>
+
+    <div class="pattern-block">
+      <span class="hl">[Large headline — the hook or claim]</span><br>
+      <span class="ph">[1–2 line supporting sentence]</span><br>
+      <span class="ph">[Optional: CTA button]</span><br>
+      <br>
+      <span class="hl">[Large headline — next point]</span><br>
+      <span class="ph">[1–2 line supporting sentence]</span><br>
+      <span class="ph">[Optional: CTA button]</span>
+    </div>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Convert feature lists into headline/subheader pairs stacked vertically</li>
+          <li>Let the typography carry the structure — no boxes needed</li>
+          <li>Use icons as small accent elements below a headline, not as the primary content carrier</li>
+          <li>Give each benefit its own visual moment — one per "section" in the flow</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Build 3-column icon grids — this is the single most common modern-email mistake</li>
+          <li>Create "feature" sections with boxed cards around each feature</li>
+          <li>Use side-by-side icon + paragraph as the main content structure</li>
+          <li>Let the copy's bullet list shape drive the design into a table or grid</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Notice how content flows vertically — never in grids</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/apple-airpods.png','Apple','AirPods Max 2','Pure header/subheader flow — content hierarchy does all the structural work')">
+        <div class="example-img-wrap">
+          <img src="images/apple-airpods.png" alt="Apple AirPods" onerror="showPlaceholder(this,'apple-airpods.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Apple</div>
+        <div class="example-title">AirPods Max 2</div>
+        <div class="example-note">Pure vertical header/sub flow</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-raddads.png','BREZ','Here\'s to the rad dads','Each product gets its own headline moment — not a grid comparison')">
+        <div class="example-img-wrap">
+          <img src="images/brez-raddads.png" alt="BREZ Rad Dads" onerror="showPlaceholder(this,'brez-raddads.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Here's to the rad dads</div>
+        <div class="example-note">Each product flows independently</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-polo.png','Vessel','Performance Tech Polo','Feature callouts are integrated into product imagery — not a list')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-polo.png" alt="Vessel Polo" onerror="showPlaceholder(this,'vessel-polo.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Performance Tech Polo</div>
+        <div class="example-note">Features live on the image, not below</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-findyoursunday.png','Vessel','Find Your Sunday','Two-product comparison using header/sub — not a side-by-side table')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-findyoursunday.png" alt="Vessel Find Your Sunday" onerror="showPlaceholder(this,'vessel-findyoursunday.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Find Your Sunday</div>
+        <div class="example-note">Two products — vertical flow, not table</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 5 ── -->
+  <section class="section" id="p5">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 05</div>
+        <div class="section-title">Pill CTAs — Never Square</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Every call-to-action button uses a fully rounded pill shape — no sharp corners, no square edges. Button style communicates brand posture before the copy even lands. Square buttons signal old-school templates. Pill buttons signal modern, considered design. Width is proportional to content, never full-bleed.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li><strong>Outlined pill</strong> — transparent fill, colored border + text. Works on dark backgrounds. Premium, confident. (Vessel)</li>
+          <li><strong>Filled pill</strong> — solid color fill. Works when stronger CTA contrast is needed. (BREZ lime-green, One Sol warm solid)</li>
+          <li><strong>Pill with arrow</strong> — "Shop now →" style. Subtle, editorial, great for secondary CTAs. (BREZ)</li>
+          <li>Size the button to its copy + comfortable padding — never wider than ~55% of the email column</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Use square or sharp-cornered rectangle buttons under any circumstance</li>
+          <li>Use full-width buttons that span the entire email width — they read as default template</li>
+          <li>Vary the button style within the same email (pick one style and hold it)</li>
+          <li>Use more than two distinct CTA styles in one email</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Notice button shape, width, and placement</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Lime-green filled pills with → arrows — high contrast, editorial')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Lime pill + arrow — filled style</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-sundaycarry.png','Vessel','Sunday Carry Olive','Outlined hollow pill — border only, no fill. Premium on dark bg')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-sundaycarry.png" alt="Vessel Sunday Carry" onerror="showPlaceholder(this,'vessel-sundaycarry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Sunday Carry Olive</div>
+        <div class="example-note">Outlined hollow pill — no fill</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/apple-airpods.png','Apple','AirPods Max 2','Small, minimal pills — appropriately sized to content, not full-width')">
+        <div class="example-img-wrap">
+          <img src="images/apple-airpods.png" alt="Apple AirPods" onerror="showPlaceholder(this,'apple-airpods.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Apple</div>
+        <div class="example-title">AirPods Max 2</div>
+        <div class="example-note">Minimal pill — sized to content</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-creatine.png','One Sol','Charge Your Mind','Warm solid-filled pill — centered, modest width, matches brand palette')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-creatine.png" alt="One Sol Creatine" onerror="showPlaceholder(this,'one-sol-creatine.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Charge Your Mind</div>
+        <div class="example-note">Warm solid pill — centered width</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 6 ── -->
+  <section class="section" id="p6">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 06</div>
+        <div class="section-title">Commit to One Color Palette</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Each email owns one dominant color. Every section, background, and visual element should feel like it came from the same palette decision. If the email has an accent color (usually for CTAs), that's one accent — not multiple. An email that reads as patchwork is an email that wasn't designed.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Choose the primary brand color or a seasonal palette at the brief stage — before building</li>
+          <li>Run that color or its close tones the full length of the email</li>
+          <li>Use one accent color for CTAs if needed — maximum two colors total</li>
+          <li>Treat neutral (black, white, off-white) as invisible — it doesn't count against the palette</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Mix brand colors, seasonal tones, and photography backgrounds without a unifying decision</li>
+          <li>Let each section have its own color story — sections should feel like the same email</li>
+          <li>Default to brand guidelines mechanically — ask what palette fits the campaign angle</li>
+          <li>Use more than one accent color across the email</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Each email has a clear single-palette identity</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-bestseller.png','Vessel','One Best Seller','100% dark/black palette — every element works within the same dark canvas')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-bestseller.png" alt="Vessel Best Seller" onerror="showPlaceholder(this,'vessel-bestseller.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">One Best Seller</div>
+        <div class="example-note">One palette: dark charcoal only</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Purple throughout — lime green is the sole accent. Two colors, one decision')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Purple + one lime accent — that's it</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-creatine.png','One Sol','Charge Your Mind','Warm orange from top to bottom — the gradient is the entire palette')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-creatine.png" alt="One Sol Creatine" onerror="showPlaceholder(this,'one-sol-creatine.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Charge Your Mind</div>
+        <div class="example-note">One palette: orange/gold only</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-hydration.png','One Sol','Stay Hydrated, Stay Cute','Sage green owns the entire email — different email, different palette commitment')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-hydration.png" alt="One Sol Hydration" onerror="showPlaceholder(this,'one-sol-hydration.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Stay Hydrated, Stay Cute</div>
+        <div class="example-note">One palette: sage green only</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 7 ── -->
+  <section class="section" id="p7">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 07</div>
+        <div class="section-title">Space Is Design</div>
+      </div>
+    </div>
+
+    <p class="section-desc">White space — or dark space, or negative space — is not wasted space. It's what separates premium from cheap. The amount of breathing room around elements is one of the loudest signals about whether a brand takes itself seriously. Apple is the extreme reference. Vessel is close. The instinct to fill empty space is almost always wrong.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Give headlines generous vertical padding — above and below</li>
+          <li>Add spacing between the image and the next headline that feels slightly too much — it probably isn't</li>
+          <li>Treat the space itself as part of the composition, not a gap to fill</li>
+          <li>When in doubt, add more padding, not more content</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Stack content blocks with no breathing room between them</li>
+          <li>Fill blank areas with decorative elements — if it looks empty, the spacing might be right</li>
+          <li>Use tight padding inside CTA buttons — generous padding is part of the pill look</li>
+          <li>Reduce spacing to fit more content — cut the content instead</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Notice how much air surrounds every element</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/apple-airpods.png','Apple','AirPods Max 2','The reference for whitespace — more space than content, and it works')">
+        <div class="example-img-wrap">
+          <img src="images/apple-airpods.png" alt="Apple AirPods" onerror="showPlaceholder(this,'apple-airpods.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Apple</div>
+        <div class="example-title">AirPods Max 2</div>
+        <div class="example-note">The whitespace reference — study this</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-sundaycarry.png','Vessel','Sunday Carry Olive','Generous padding around headlines and CTAs — everything breathes')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-sundaycarry.png" alt="Vessel Sunday Carry" onerror="showPlaceholder(this,'vessel-sundaycarry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Sunday Carry Olive</div>
+        <div class="example-note">Headlines and CTAs — lots of air</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-strawberry.png','BREZ','Strawberry Spritz','Clean separation between sections — space does the dividing work')">
+        <div class="example-img-wrap">
+          <img src="images/brez-strawberry.png" alt="BREZ Strawberry" onerror="showPlaceholder(this,'brez-strawberry.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Strawberry Spritz</div>
+        <div class="example-note">Space divides sections — no rules needed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 8 ── -->
+  <section class="section" id="p8">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 08</div>
+        <div class="section-title">Typography Hierarchy</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Headlines should be large enough to read at a scroll-stop glance. The size jump between headline and body copy should feel exaggerated — at minimum 2× the size. Body copy supports; it never leads. The typography itself should communicate the brand's confidence level before the reader reads a single word.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Make headlines significantly larger than they feel necessary — bigger is almost always right</li>
+          <li>Use a clear two-level hierarchy: display/headline and body. Three levels max</li>
+          <li>Consider mixing a display serif (editorial, warm) with a clean sans-serif (body) — BREZ does this well</li>
+          <li>Use letter-spacing on uppercase display text — tight tracking reads as modern</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Use the same size for headlines and body copy — no hierarchy = no design</li>
+          <li>Bold mid-paragraph body copy, add underlines, or color-highlight words in body text</li>
+          <li>Use more than two type weights in one email (e.g., thin + regular + bold = too many)</li>
+          <li>Set body copy larger than 16px — if you need to, the copy is too long</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Compare headline size to body — the gap is intentional</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-polo.png','Vessel','Performance Tech Polo','Very clear 3-level hierarchy: display, subhead, body — each dramatically different')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-polo.png" alt="Vessel Polo" onerror="showPlaceholder(this,'vessel-polo.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Performance Tech Polo</div>
+        <div class="example-note">3-level hierarchy, dramatic size diff</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Mixed serif/sans creates sophistication — each type choice is intentional')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Mixed serif + sans — editorial feel</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-bestseller.png','Vessel','One Best Seller','All-caps tracked headlines vs. small body — extreme hierarchy done right')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-bestseller.png" alt="Vessel Best Seller" onerror="showPlaceholder(this,'vessel-bestseller.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">One Best Seller</div>
+        <div class="example-note">All-caps tracked vs. small body</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 9 ── -->
+  <section class="section" id="p9">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 09</div>
+        <div class="section-title">Technical Callouts (When Applicable)</div>
+      </div>
+    </div>
+
+    <p class="section-desc">When a product has specific technical features that warrant calling out, use annotation-style labels on the product image — not a bullet list or features table. This is the editorial technique used in magazine product spreads and Apple spec pages. It reads as premium, confident, and product-first.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Place the product image large and let annotation labels point to specific details</li>
+          <li>Use short labels (2–5 words) — the image does the showing, the label names it</li>
+          <li>Keep annotation lines thin and minimal — this is a spec diagram, not a callout bubble</li>
+          <li>Apply this technique for performance/technical products where specs are a selling point</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Pull features out of the image and list them in a box or table below the product shot</li>
+          <li>Use checkmarks or bullet points for product specs — it reads as a comparison, not editorial</li>
+          <li>Overcrowd the product image with too many callouts — 3–5 max</li>
+          <li>Apply this technique to lifestyle/brand-feel emails — it's for technical product moments only</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Notice how features are on the image, not listed below</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-polo.png','Vessel','Performance Tech Polo','Annotation lines on the product diagram — laser cut, sonic-welded, UPF50 all labeled on the shirt')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-polo.png" alt="Vessel Polo" onerror="showPlaceholder(this,'vessel-polo.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Performance Tech Polo</div>
+        <div class="example-note">Annotation lines on product — editorial spec</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/vessel-findyoursunday.png','Vessel','Find Your Sunday','Weight, strap, and storage specs annotated on bag photography')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-findyoursunday.png" alt="Vessel Find Your Sunday" onerror="showPlaceholder(this,'vessel-findyoursunday.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Find Your Sunday</div>
+        <div class="example-note">Weight + storage callouts on bag photo</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/apple-airpods.png','Apple','AirPods Max 2','Apple uses split-panel feature callouts — image + short text, no bullets')">
+        <div class="example-img-wrap">
+          <img src="images/apple-airpods.png" alt="Apple AirPods" onerror="showPlaceholder(this,'apple-airpods.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Apple</div>
+        <div class="example-title">AirPods Max 2</div>
+        <div class="example-note">Split-panel callouts — image does the work</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 10 ── -->
+  <section class="section" id="p10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 10</div>
+        <div class="section-title">Clean Footer</div>
+      </div>
+    </div>
+
+    <p class="section-desc">The footer should feel like it belongs to the email, not like a required legal block bolted on after the real design ended. A heavy, block-styled footer restarts the email visually and signals that the designer stopped caring after the last CTA. Keep it minimal. Match it to the email's color story.</p>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Match the footer background to the email's dominant color or let it fade to dark/neutral</li>
+          <li>Limit navigation links to 3–4 max, small text, horizontal layout</li>
+          <li>If press logos are on-brand (e.g., BREZ), use them as a minimal credibility strip</li>
+          <li>Keep legal/unsubscribe text very small and in the email's muted color — present but not loud</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Create a heavy, color-blocked footer section that visually "restarts" the email</li>
+          <li>Load the footer with social icons, large imagery, or promotional content</li>
+          <li>Use a footer background that contrasts strongly with the email body</li>
+          <li>Add so many links that the footer reads as a navigation menu</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">The footer should feel like an ending, not a restart</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-finalhours.png','Vessel','Final Hours to Order','3-link minimal footer on dark bg — matches the email, feels finished')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-finalhours.png" alt="Vessel Final Hours" onerror="showPlaceholder(this,'vessel-finalhours.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Final Hours to Order</div>
+        <div class="example-note">3-link footer — minimal, matches email</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-lighter.png','BREZ','Let\'s make things lighter','Press logo strip + 4 nav links — credibility without clutter')">
+        <div class="example-img-wrap">
+          <img src="images/brez-lighter.png" alt="BREZ Lighter" onerror="showPlaceholder(this,'brez-lighter.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Let's make things lighter</div>
+        <div class="example-note">Press strip + 4 links — credibility strip</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-hydration.png','One Sol','Stay Hydrated, Stay Cute','Footer matches the sage green palette — 3 links, no clutter, feels like part of the email')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-hydration.png" alt="One Sol Hydration" onerror="showPlaceholder(this,'one-sol-hydration.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">Stay Hydrated, Stay Cute</div>
+        <div class="example-note">Footer matches email palette — clean 3 links</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLE 11 ── -->
+  <section class="section" id="p11">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div class="section-titles">
+        <div class="section-tag">Principle 11</div>
+        <div class="section-title">Infographics — Three Approved Formats</div>
+      </div>
+    </div>
+
+    <p class="section-desc">When the brief calls for structured visual content — comparisons, timelines, data breakdowns — don't default to a generic table or bullet list. Use one of three formats, each matched to the type of content. The format choice should feel inevitable given the content: annotation for product specs, floating blocks for comparisons, timeline for sequential journeys.</p>
+
+    <div style="display:flex; flex-direction:column; gap:24px; margin-bottom:44px;">
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 28px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="background:var(--gold-dim); border:1px solid rgba(201,168,112,0.25); border-radius:100px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold);">Format 01</div>
+          <div style="font-size:17px; font-weight:700; color:var(--text);">Annotation Callouts</div>
+        </div>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2); margin-bottom:12px;"><strong style="color:var(--text);">Use for:</strong> Product specs, feature highlights, technical details tied to a physical product.</p>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2);">Labels point directly at the relevant part of the product in the image. Lines are thin and minimal. The product image does the showing — the label just names it. 3–5 callouts max. This is a magazine spec diagram, not a feature list.</p>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 28px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="background:var(--gold-dim); border:1px solid rgba(201,168,112,0.25); border-radius:100px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold);">Format 02</div>
+          <div style="font-size:17px; font-weight:700; color:var(--text);">Floating Blocks</div>
+        </div>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2); margin-bottom:12px;"><strong style="color:var(--text);">Use for:</strong> Product comparisons, variant breakdowns, ingredient lists, multi-item showcases.</p>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2);">Rounded cards with generous internal padding, sitting on the email background. They float — they don't snap to a hard grid. Cards have breathing room between them. Each card has a clear headline and a short supporting line. Never use more than 3 cards per row; single-column stacking is often cleaner.</p>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:26px 28px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="background:var(--gold-dim); border:1px solid rgba(201,168,112,0.25); border-radius:100px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold);">Format 03</div>
+          <div style="font-size:17px; font-weight:700; color:var(--text);">Journey / Timeline</div>
+        </div>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2); margin-bottom:12px;"><strong style="color:var(--text);">Use for:</strong> Onboarding sequences, day-by-day breakdowns, step-by-step processes, before/after arcs.</p>
+        <p style="font-size:14px; line-height:1.75; color:var(--text-2);">A visual flow with numbered milestones, a connecting path or line, and short story-driven copy at each step. Should feel editorial and narrative — not a process diagram or flowchart. The copy at each step should read like a moment, not a task.</p>
+      </div>
+
+    </div>
+
+    <div class="do-dont">
+      <div class="rule-card do">
+        <div class="rule-tag"><span class="rule-dot"></span> Do</div>
+        <ul>
+          <li>Match the format to the content type — annotations for specs, floating blocks for comparisons, timeline for journeys</li>
+          <li>Keep cards rounded with generous padding — sharp corners and tight text make blocks look like spreadsheets</li>
+          <li>Write milestone copy in the timeline as moments, not instructions</li>
+          <li>Let infographics breathe — same spacing rules apply as to the rest of the email</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <div class="rule-tag"><span class="rule-dot"></span> Don't</div>
+        <ul>
+          <li>Use an HTML-style table or a hard-edged comparison matrix — these look like a spreadsheet</li>
+          <li>Build a 3-column grid and call it a comparison — if the columns align to a rigid grid, it reads as a template</li>
+          <li>Mix formats in one email — pick one infographic style and commit to it</li>
+          <li>Use a generic flowchart or diagram style for timelines — it should feel like a story, not a process doc</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="examples-header">
+      <div class="examples-label">Email Examples</div>
+      <div class="examples-hint">Each email shows a different format in action</div>
+    </div>
+    <div class="examples-scroll">
+      <div class="example-card" onclick="openLightbox('images/vessel-polo.png','Vessel','Performance Tech Polo','Format 01: Annotation callouts — labels point directly at product details on the image')">
+        <div class="example-img-wrap">
+          <img src="images/vessel-polo.png" alt="Vessel Polo" onerror="showPlaceholder(this,'vessel-polo.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">Vessel</div>
+        <div class="example-title">Performance Tech Polo</div>
+        <div class="example-note">Format 01 — Annotation callouts</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/brez-raddads.png','BREZ','Here\'s to the rad dads','Format 02: Floating blocks — rounded product cards, single-column, generous padding between each')">
+        <div class="example-img-wrap">
+          <img src="images/brez-raddads.png" alt="BREZ Rad Dads" onerror="showPlaceholder(this,'brez-raddads.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">BREZ</div>
+        <div class="example-title">Here's to the rad dads</div>
+        <div class="example-note">Format 02 — Floating blocks</div>
+      </div>
+      <div class="example-card" onclick="openLightbox('images/one-sol-summer.png','One Sol','The Summer Pre-Game','Format 03: Timeline — 14-day roadmap with connected milestones, story-driven copy at each step')">
+        <div class="example-img-wrap">
+          <img src="images/one-sol-summer.png" alt="One Sol Summer" onerror="showPlaceholder(this,'one-sol-summer.png')">
+          <div class="example-zoom"><div class="zoom-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+        </div>
+        <div class="example-brand">One Sol</div>
+        <div class="example-title">The Summer Pre-Game</div>
+        <div class="example-note">Format 03 — Journey / Timeline</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLIENT CALIBRATION ── -->
+  <section class="section" id="calibration">
+    <div class="section-header">
+      <div class="section-num" style="font-size:48px">Cal.</div>
+      <div class="section-titles">
+        <div class="section-tag">Application</div>
+        <div class="section-title">Client Calibration</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Not every client gets the same intensity. Use the brand's website and existing assets as your calibration reference. When starting a new client email, ask: <em>what is the emotional feeling of their website?</em> The email should feel like it could live there. These rules tell you how to adjust the dials.</p>
+
+    <div class="cal-header-row">
+      <div class="cal-header-cell">Brand Signal</div>
+      <div class="cal-header-cell">Dial Up</div>
+      <div class="cal-header-cell">Dial Down</div>
+    </div>
+
+    <div class="cal-row">
+      <div class="cal-cell signal">Dark / moody brand</div>
+      <div class="cal-cell do">High contrast, dramatic photography fades, dark canvas throughout, near-black backgrounds</div>
+      <div class="cal-cell dont">Avoid bright or warm tones — they fight the brand's identity</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-cell signal">Bright / energetic brand</div>
+      <div class="cal-cell do">Bold gradients, warmer or saturated tones, more playful photography treatment</div>
+      <div class="cal-cell dont">Reduce heaviness and formality — lightness is part of the brand</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-cell signal">Feminine / lifestyle brand</div>
+      <div class="cal-cell do">Softer fades, more white space, gentler color transitions, editorial photo treatment</div>
+      <div class="cal-cell dont">Less bold type, fewer high-contrast moments — warmth over impact</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-cell signal">Technical / performance brand</div>
+      <div class="cal-cell do">Annotation callouts, spec-forward layouts, structured product diagrams, precise copy</div>
+      <div class="cal-cell dont">Remove decorative or lifestyle-feel elements — function leads here</div>
+    </div>
+    <div class="cal-row">
+      <div class="cal-cell signal">Luxury / premium brand</div>
+      <div class="cal-cell do">More white space, smaller and quieter CTAs, restrained palette, less copy</div>
+      <div class="cal-cell dont">No bold/energetic elements — remove anything that feels promotional or loud</div>
+    </div>
+  </section>
+
+  <!-- ── CHECKLIST ── -->
+  <section class="section" id="checklist">
+    <div class="section-header">
+      <div class="section-num" style="font-size:48px">✓</div>
+      <div class="section-titles">
+        <div class="section-tag">Pre-Send</div>
+        <div class="section-title">Design Checklist</div>
+      </div>
+    </div>
+
+    <p class="section-desc">Reference this before submitting any email design. Every item should be true before the file goes out.</p>
+
+    <div class="checklist">
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">No hard-edged section breaks — the email reads as one scrollable canvas</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Logo floats directly on the hero — no header block or background container</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Photography fades at edges — no hard rectangular image crops visible</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">No 3-column icon grids or generic feature boxes — use header/subheader structure instead</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">If the brief has structured visual content, one of the three infographic formats has been applied (Principle 11)</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">CTA button shape matches or complements the client's brand — no default square corners</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">CTA buttons are proportionally sized — not full-width</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">One dominant color palette throughout — maximum one accent color</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Generous spacing around headlines, images, and CTAs — elements breathe</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Headline size is dramatically larger than body copy — minimum 2× difference</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Maximum two typeface weights used in the email</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Footer background matches or flows from the email's color story</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Footer navigation is minimal — 3–4 links max</div>
+      </div>
+      <div class="check-item static">
+        <div class="check-box static-box">–</div>
+        <div class="check-text">Design has been calibrated against the client's website aesthetic — it could live there</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page footer -->
+  <div class="page-footer">
+    <div class="footer-brand"><strong>YDM Agency</strong> — Email Design Guide</div>
+    <div class="footer-note">Reference brands: Vessel, BREZ, Apple, One Sol. Update this guide when new reference quality is found.</div>
+  </div>
+
+</main>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" id="lb-prev" onclick="lbNav(-1)">‹</button>
+
+  <div class="lb-img-viewport" id="lb-viewport">
+    <img id="lb-img" src="" alt="">
+  </div>
+
+  <div class="lb-bottom">
+    <div class="lb-caption" id="lb-caption"></div>
+    <div class="lb-controls">
+      <button class="lb-zoom-btn" id="lb-zoom-out" onclick="lbZoomBy(-0.5)" title="Zoom out">−</button>
+      <span class="lb-zoom-level" id="lb-zoom-level">100%</span>
+      <button class="lb-zoom-btn" id="lb-zoom-in" onclick="lbZoomBy(0.5)" title="Zoom in">+</button>
+      <div class="lb-divider"></div>
+      <button class="lb-reset-btn" onclick="resetLbZoom()">Reset</button>
+    </div>
+    <div class="lb-hint">Scroll to zoom · Drag to pan · Double-click to reset</div>
+  </div>
+
+  <button class="lb-nav lb-next" id="lb-next" onclick="lbNav(1)">›</button>
+</div>
+
+<script>
+  // ── Sidebar active state ──
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item[data-section]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navItems.forEach(item => item.classList.remove('active'));
+        const active = document.querySelector(`.nav-item[data-section="${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Image placeholder ──
+  function showPlaceholder(img, filename) {
+    img.style.display = 'none';
+    const wrap = img.parentElement;
+    const ph = document.createElement('div');
+    ph.className = 'example-placeholder';
+    ph.innerHTML = `<div class="ph-icon">📧</div><div class="ph-filename">${filename}</div>`;
+    wrap.appendChild(ph);
+  }
+
+  // ── Lightbox ──
+  let currentImages = [];
+  let currentIndex = 0;
+
+  // Zoom/pan state
+  let lbScale = 1;
+  let lbX = 0;
+  let lbY = 0;
+  const MIN_SCALE = 1;
+  const MAX_SCALE = 6;
+
+  const lbViewport = document.getElementById('lb-viewport');
+  const lbImg = document.getElementById('lb-img');
+
+  function applyLbTransform(animated) {
+    if (!animated) lbImg.classList.add('no-transition');
+    else lbImg.classList.remove('no-transition');
+
+    // Clamp pan so image doesn't drift fully out of frame
+    const maxOffset = (lbScale - 1) * lbViewport.clientWidth * 0.5;
+    const maxOffsetY = (lbScale - 1) * lbViewport.clientHeight * 0.5;
+    lbX = Math.max(-maxOffset, Math.min(maxOffset, lbX));
+    lbY = Math.max(-maxOffsetY, Math.min(maxOffsetY, lbY));
+
+    lbImg.style.transform = `translate(${lbX}px, ${lbY}px) scale(${lbScale})`;
+    document.getElementById('lb-zoom-level').textContent = Math.round(lbScale * 100) + '%';
+    document.getElementById('lb-zoom-out').disabled = lbScale <= MIN_SCALE;
+    document.getElementById('lb-zoom-in').disabled = lbScale >= MAX_SCALE;
+    lbViewport.classList.toggle('zoomed', lbScale > 1);
+  }
+
+  function resetLbZoom() {
+    lbScale = 1; lbX = 0; lbY = 0;
+    applyLbTransform(true);
+  }
+
+  function lbZoomBy(delta) {
+    lbScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, lbScale + delta));
+    if (lbScale === MIN_SCALE) { lbX = 0; lbY = 0; }
+    applyLbTransform(true);
+  }
+
+  // Scroll to zoom
+  lbViewport.addEventListener('wheel', e => {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.25 : -0.25;
+    lbScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, lbScale + delta));
+    if (lbScale === MIN_SCALE) { lbX = 0; lbY = 0; }
+    applyLbTransform(false);
+  }, { passive: false });
+
+  // Drag to pan
+  let dragging = false, dragStartX = 0, dragStartY = 0, dragOriginX = 0, dragOriginY = 0;
+
+  lbViewport.addEventListener('mousedown', e => {
+    if (lbScale <= 1) return;
+    dragging = true;
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    dragOriginX = lbX; dragOriginY = lbY;
+    lbViewport.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    lbX = dragOriginX + (e.clientX - dragStartX);
+    lbY = dragOriginY + (e.clientY - dragStartY);
+    applyLbTransform(false);
+  });
+
+  document.addEventListener('mouseup', () => {
+    dragging = false;
+    lbViewport.classList.remove('dragging');
+  });
+
+  // Double-click to reset
+  lbViewport.addEventListener('dblclick', resetLbZoom);
+
+  // Touch pinch-to-zoom
+  let lastTouchDist = null;
+  lbViewport.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      lastTouchDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    }
+  }, { passive: true });
+
+  lbViewport.addEventListener('touchmove', e => {
+    if (e.touches.length !== 2 || lastTouchDist === null) return;
+    e.preventDefault();
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    const ratio = dist / lastTouchDist;
+    lbScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, lbScale * ratio));
+    lastTouchDist = dist;
+    if (lbScale === MIN_SCALE) { lbX = 0; lbY = 0; }
+    applyLbTransform(false);
+  }, { passive: false });
+
+  lbViewport.addEventListener('touchend', () => { lastTouchDist = null; });
+
+  function openLightbox(src, brand, title, note) {
+    const sectionEl = event.target.closest('.section') || event.target.closest('.hero');
+    const cards = sectionEl ? Array.from(sectionEl.querySelectorAll('.example-card')) : [];
+    currentImages = cards.map(card => {
+      const onclick = card.getAttribute('onclick') || '';
+      const m = onclick.match(/openLightbox\('([^']+)','([^']+)','([^']+)','([^']*)'\)/);
+      return m ? { src: m[1], brand: m[2], title: m[3], note: m[4] } : null;
+    }).filter(Boolean);
+
+    currentIndex = currentImages.findIndex(img => img.src === src);
+    if (currentIndex < 0) {
+      currentImages = [{ src, brand, title, note }];
+      currentIndex = 0;
+    }
+
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderLightbox() {
+    resetLbZoom();
+    const item = currentImages[currentIndex];
+    lbImg.src = item.src;
+    lbImg.alt = `${item.brand} — ${item.title}`;
+    document.getElementById('lb-caption').innerHTML = `<strong>${item.brand}</strong> — ${item.title}${item.note ? `<br><span style="color:var(--gold);font-style:italic">${item.note}</span>` : ''}`;
+    document.getElementById('lb-prev').disabled = currentIndex === 0;
+    document.getElementById('lb-next').disabled = currentIndex === currentImages.length - 1;
+  }
+
+  function lbNav(dir) {
+    currentIndex = Math.max(0, Math.min(currentImages.length - 1, currentIndex + dir));
+    renderLightbox();
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+    resetLbZoom();
+  }
+
+  function closeLightboxOnBg(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === '+' || e.key === '=') lbZoomBy(0.5);
+    if (e.key === '-') lbZoomBy(-0.5);
+    if (e.key === '0') resetLbZoom();
+  });
+
+  // ── Checklist ──
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    updateCount();
+  }
+
+  function updateCount() {
+    const total = document.querySelectorAll('.check-item').length;
+    const done = document.querySelectorAll('.check-item.checked').length;
+    document.getElementById('check-count').textContent = done;
+  }
+
+  function resetChecklist() {
+    document.querySelectorAll('.check-item.checked').forEach(i => i.classList.remove('checked'));
+    updateCount();
+  }
+</script>
+</body>
+</html>
